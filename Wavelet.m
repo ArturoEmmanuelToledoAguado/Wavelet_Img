@@ -11,7 +11,7 @@ P=rgb2gray(P);
 M=rgb2gray(M);
 
 figure
-imshow(P)
+imshowpair(P,M,"montage")
 
 %Iteraciones
 [Ca,Ch,Cv,Cd]=dwt2(P,'haar');
