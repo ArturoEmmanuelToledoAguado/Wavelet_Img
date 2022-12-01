@@ -21,6 +21,7 @@ imshow(P)
 [Ca5,Ch5,Cv5,Cd5]=dwt2(Ca4,'haar');
 [Ca6,Ch6,Cv6,Cd6]=dwt2(Ca5,'haar');
 [Ca7,Ch7,Cv7,Cd7]=dwt2(Ca6,'haar');
+[Ca8,Ch8,Cv8,Cd8]=dwt2(Ca7,'haar');
 
 figure
 subplot(2,2,1)
@@ -33,10 +34,12 @@ subplot(2,2,4)
 imshow(Cd)
 
 %Rearmado
-[f,c,d]=size(Ca7);
+[f,c,d]=size(Ca8);
 M=imresize(M,[f c]);
-Imrec7=idwt2(M,Ch7,Cv7,Cd7,'haar');
-Imrec7(end,:)=[];
+Imrec8=idwt2(M,Ch8,Cv8,Cd8,'haar');
+Imrec7=idwt2(Imrec8,Ch7,Cv7,Cd7,'haar');
+%Imrec7(end,:)=[];
+Imrec7(end,:,:)=[];
 Imrec6=idwt2(Imrec7,Ch6,Cv6,Cd6,'haar');
 Imrec5=idwt2(Imrec6,Ch5,Cv5,Cd5,'haar');
 %Imrec5(:,end)=[];
