@@ -82,8 +82,7 @@ La resolución de la señal, la cual es una medida de la cantidad detallada de l
 
 ### Resultados ⚗🧪
 
-Se propuso usar 7 imagenes diferentes y probar los 7 metodos descritos en la documentación de matlab (los 7 metodos se aplicaron a cada imagen), a continuación se muestran los resultados obtenidos
 
 <div align="center"><img src="DocIMG/RS.gif"></div>
 
-<a href="https://github.com/ArturoEmmanuelToledoAguado/Edge/blob/main/Edge.m">Código</a>
+<a href="https://github.com/ArturoEmmanuelToledoAguado/Wavelet_Img/blob/main/Wavelet.m">Código</a>
