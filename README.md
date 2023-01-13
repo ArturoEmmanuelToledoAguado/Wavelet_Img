@@ -1,5 +1,5 @@
 # Introducción 📖
-Se propone realizar un programa que realice diferentes pruebas con los operadores de <a href="https://la.mathworks.com/help/images/ref/edge.html">edge</a> y proponer uno nuevo, pero antes de comenzar:
+Se propone realizar un programa que use DWT para ocultar una imagen dentro de otra (esteganografia), se recomienda leer la documentación de <a href="https://la.mathworks.com/help/wavelet/ref/wfilters.html">wfilters</a>, <a href="https://la.mathworks.com/help/wavelet/ref/dwt2.html?s_tid=doc_ta">dwt2</a> y <a href="https://la.mathworks.com/help/wavelet/ref/idwt2.html?s_tid=doc_ta">idwt2</a>; pero antes de comenzar:
 
 ## ¿Qué es el procesamiento digital de imagenes (PDI)? 🤷‍♂️🤷‍
 PDI se puede definir como el conjunto de procesamientos que se realizan sobre una imagen digital ya sea para realizar su almacenamiento, transmisión o tratamiento.
@@ -79,6 +79,75 @@ Al pasar la señal a través de un banco de filtros espejo en cuadratura, la se�
 * Nota.- En el procesamiento digital de señales un **filtro espejo en cuadratura [Quadrature mirror filter, QMF]** es un filtro que divide la señal de entrada en dos bandas "opuestas" que posteriormente suelen ser submuestreadas.
 
 La resolución de la señal, la cual es una medida de la cantidad detallada de la información dentro de la señal, se modifica por la acción de filtrado y la escala se modifica por la operación de diezmado.
+
+El diezmado de una señal corresponde a la reducción de la velocidad de muestreo, o a la eliminación de algunas de las muestras de la señal.
+
+A este proceso del filtrado y diezmado sucesivo se le conoce como codificación en sub-bandas.
+
+La secuencia original $x[n]$ se pasa por un filtro pasa altas $g[n]$ y uno pasa bajas $h[n]$.
+
+La codificación en sub-bandas puede repetirse cuantas veces sea necesario para una mayor descomposición. Cada nivel filtrado y diezmado resulta en la mitad del número de muestras y por lo tanto, en la mitad de la resolución en el tiempo.
+
+<p> 
+<img src="DocIMG/CWavelet.png" align="right" style="width: 60vw; min-width: 10px;">Considerando una imagen  discreta x como una matriz de M renglones por N columnas de números reales, donde M y N son valores pares. Entonces, la DWT se obtiene realizando el siguiente procedimiento.
+</p>
+
+$$x=\begin{bmatrix}
+x_{1,1} & x_{2,1} & \ldots & x_{N,1}\\
+x_{1,2} & x_{2,2} & \ldots & x_{N,2}\\
+\vdots & \vdots & \ddots & \vdots  \\
+x_{1,M} & x_{2,M} & & x_{N.M}
+\end{bmatrix}$$
+
+Aplicar la DWT a cada fila de **x**, lo cual producirá una nueva matriz.
+
+Aplicar la DWT a la nueva matriz, pero esta vez a cada columna.
+
+Quedando cuatro sub-imagenes de **M/2** filas y **N/2** columnas.
+
+$$f \rightarrow \begin{pmatrix}
+a_1 & | & h_1\\
+-- &  & --\\
+v_1 & | & d_1
+\end{pmatrix}$$
+
+Donde $a_1$ es calculada con el promedio de las filas seguido por el promedio de las columnas, esta sub-imagen es una compresión de la imagen original, conteniendo las frecuencias bajas.
+
+$h_1$ es calculada con el promedio de las filas y la diferencia de las columnas, aqui se conservan los detalles horizontales de la imagen y contien las frecuencias medias-bajas.
+
+$v_1$ es similar a $h_1$, excepto que los roles de vertical y horizontal son cambiados, esta sub-imagen contiene los detalles verticales, conservando las frecuencias medias-altas.
+
+$d_1$ contiene los detalles diagonales, se obtiene de la diferencia tanto de filas como de columnas y conserva las frecuencias altas y también aquí se concentra la mayor cantidad de ruido.
+
+Despues de descomponer la señal en los niveles predefinidos anteriormente, se obtiene un grupo de señales que representa la misma señal pero en diferentes bandas de frecuencias. Este análisis multiresolución crea una descomposición piramidal de la imagen en varias escalas y una descomposición de los coeficientes en varios niveles **(descomposición multiresolución)** que se logra con filtros pasa bajos y pasa altas.
+
+### DESCOMPOSICIÓN PIRAMIDAL DE COEFICIENTES
+![3](DocIMG/DPCoef.png)
+
+## TRANSFORMADA WAVELET HAAR
+Al igual todas las demás trasformadas wavelets, la transformada Haar descompone una señal discreta en dos sub-señales de la mitad de la longitud. La subseñal $a$ es conocida como el promedio y la otra sub-señal $d$ como la diferencia. Entonces se tiene una señal discreta de la forma $f=(f_1 ,f_2 \cdots , f_N)$, donde $N$ es un entero positivo.
+
+La sub-señal promedio es calculada con la siguiente formula:
+
+$$a_m=\frac{x_{2m-1}+x_{2m}}{\sqrt{2}}$$
+
+La sub-señal diferencia se obtiene de la siguiente manera:
+
+$$d_m=\frac{x_{2m-1}-x_{2m}}{\sqrt{2}}$$
+
+Para $m=1,2,3,\cdots,N/2$
+$$a_1=\frac{x_1+x_2}{\sqrt{2}} \hspace{1cm} d_1=\frac{x_1-x_2}{\sqrt{2}} \hspace{.5cm} , a_2\frac{x_3+x_4}{\sqrt{2}} \hspace{1cm} d_2=\frac{x_3-x_4}{\sqrt{2}}$$
+
+* Nota.- La portadora debe ser una imagen de alta resolución
+* Nota.- Siempre se deben usar las altas frecuencias
+* Nota.- Se remplaza CD por oculta [medir lo mismo]
+
+En Matlab se usan las funciones DWT2 e IDWT2, para el proceso de descomposición en bandas de frecuencia de una imagen y recomposición respectivamente, como se muestra en este pequeño ejemplo
+
+~~~
+[CA,CH,CV,CD]=dwt2(img,'haar');
+ImgRec=idwt2(CA,CH,CV,CD,'haar');
+~~~
 
 ### Resultados ⚗🧪
 
