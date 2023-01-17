@@ -150,8 +150,18 @@ ImgRec=idwt2(CA,CH,CV,CD,'haar');
 ~~~
 
 ### Resultados ⚗🧪
+Para esta practica fue necesario pasar las imagenes a escala de grises antes de hacer uso de la transformada Wavelet; se probaron todas las transformadas wavelet disponibles, de las cuales so se pudieron usar las siguientes para esta practica:
+* haar
+* coif1
+* fk4
+* dmey
+* bior1.1
+* rbio1.1"
 
+Para lograr ocultar la imagen mensaje en la portadora (se usaron 6 de cada una), el procedimiento se realizo 6 veces, a continuación se muestran los resultados obtenidos:
 
-<div align="center"><img src="DocIMG/RS.gif"></div>
+<div align="center"><img src="DocIMG/G1.gif"></div>
+
+<div align="center"><img src="DocIMG/G2.gif"></div>
 
 <a href="https://github.com/ArturoEmmanuelToledoAguado/Wavelet_Img/blob/main/Wavelet.m">Código</a>
